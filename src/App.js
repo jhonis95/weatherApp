@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
 
+import { createClient } from 'pexels';
+
+const clientImgKey = createClient('563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da');
+
+let weatherApiKey='235ee31517e38d928f1e4d68b6d638fd';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
     </div>
   );
 }
