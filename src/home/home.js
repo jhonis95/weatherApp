@@ -17,9 +17,12 @@ class home extends Component{
             VideoLink:'',
             cityName:'',
             weatherAPIData:{
-                lat:null,
-                lon:null,
-                weatherAPIKey:this.weatherAPIKey
+                city:null,
+                temperature:null,
+                tempMax:null,
+                tempMin:null,
+                humidity:null,
+                weather:null,
             }
         }
         this.timeoutID=timeoutID;
@@ -28,15 +31,6 @@ class home extends Component{
         this.getVideo=this.getVideo.bind(this);
         this.searchHeandler=this.searchHeandler.bind(this);
         this.fetchLocation=this.fetchLocation.bind(this);
-    }
-    weather=()=>{
-        return(
-            <div className="weatherContainer">
-                <div className="weatherCar">
-                    
-                </div>
-            </div>
-        )
     }
     componentDidMount(){
         // this.getVideo()
@@ -89,13 +83,26 @@ class home extends Component{
                     console.log('Network response was not ok.');
                 }
             }).then((data)=>{
+                this.fetchWeather(data[0].lat,data[0].lon)
+            })
+    }
+    fetchWeather(lat,lon){
+        fetch(
+            'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+this.weatherAPIKey+'&units=metric'
+            ).then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                console.log(data)
                 this.setState({
                     weatherAPIData:{
-                        lat:data[0].lat,
-                        lon:data[0].lon,
-                        weatherAPIKey:this.weatherAPIKey
+                        city:data.name,
+                        temperature:data.main.temp,
+                        tempMax:data.main.temp_max,
+                        tempMin:data.main.temp_min,
+                        humidity:data.main.humidity,
+                        weather:data.weather[0].main,
                     }
-                })     
+                })
             })
     }
     render(){
