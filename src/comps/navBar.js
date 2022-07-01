@@ -1,22 +1,31 @@
 import { Component, React } from "react";
+import styled from "styled-components";
+
+const NavBarContainer=styled.nav`
+    display: flex;
+`
+const LogoImage=styled.img`
+    border-radius: 50%;
+`
+const Title=styled.h3`
+`
+const ButtonList=styled.ul`
+`
 
 class navBar extends Component{
     render(){
         return(
-            <nav>
-                <img src=""/>
-                <p>jonatan de oliveira</p>
-                <p>web de developer</p>
+            <NavBarContainer>
+                <LogoImage src=""/>
+                <Title>jonatan de oliveira</Title>
 
-                <h1>Weather App</h1>
+                <Title>Weather App</Title>
 
-                <ul>
-                    <a>App</a>
-                    <a>About</a>
-                    <a>My Portfolio</a>
-                </ul>
+                <ButtonList>
+                    <a href="/">My Portfolio</a>
+                </ButtonList>
 
-            </nav>
+            </NavBarContainer>
         )
     }
 }
