@@ -5,10 +5,14 @@ import styled from "styled-components";
 const SearchBar=styled.input`
     width: 300px;
     background-color: aqua;
+    position: absolute;
 `
 const BackgroundVideo=styled.video`
     width: 100%;
-    height: 100%;    
+    height: 100%;   
+    position: absolute ;
+    z-index: -1;
+    top: 0;
 `
 class home extends Component{
     constructor(pros,timeoutID){
