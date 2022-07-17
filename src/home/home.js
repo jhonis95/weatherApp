@@ -69,6 +69,8 @@ class home extends Component{
                     }
                 })
             })
+        this.props.updateVideo(this.state.weather)
+        
     }
     render(){
         return(
