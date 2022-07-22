@@ -37,6 +37,7 @@
     ]
   },
   "resolutions": {
-    "styled-components": "^5"
+    "styled-components": "^5",
+    "react-devtools-core": "4.14.0"
   }
 }

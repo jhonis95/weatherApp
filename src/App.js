@@ -26,9 +26,7 @@ class App extends Component{
     this.getVideo()
   }
   getVideo(weatherStatus){
-    if(weatherStatus){
-      console.log(`was true`)
-    }
+    console.log(`was true ${weatherStatus}`)
     switch(weatherStatus){
       case weatherStatus==='Clear':
         fetch('https://api.pexels.com/videos/videos/2605326',{

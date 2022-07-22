@@ -21,11 +21,14 @@ class home extends Component{
                 weather:null,
             }
         }
+
+        this.weather=this.state.weatherAPIData.weather;
         this.timeoutID=timeoutID;
         this.weatherAPIKey='235ee31517e38d928f1e4d68b6d638fd'
 
         this.searchHeandler=this.searchHeandler.bind(this);
         this.fetchLocation=this.fetchLocation.bind(this);
+        this.sendWeatherStatus=this.sendWeatherStatus.bind(this);
     }
     searchHeandler(event){
         this.setState({
@@ -68,16 +71,23 @@ class home extends Component{
                         weather:data.weather[0].main,
                     }
                 })
-            })
-        this.props.updateVideo(this.state.weather)
-        
+                // console.log(this.state.weatherAPIData.weather);
+            }
+        )
+    }
+    sendWeatherStatus(){ //erro in catch the data before after the status change
+        if(!this.state.weatherAPIData.weather){
+            console.log(`woked: ${this.state.weatherAPIData.weather}`)
+            this.props.updateVideo(this.state.weatherAPIData.weather)
+        }
     }
     render(){
+        console.log(this.state.weatherAPIData.weather);
         return(
             <section className="home">
                 <SearchBar type="text" name="seatch" onChange={this.searchHeandler}></SearchBar>
                 <button>search</button>
-                <WeatherCard weatherPositionData={this.state.weatherAPIData} />
+                <WeatherCard weatherPositionData={this.state.weatherAPIData}  />
             </section>
         )
     }
