@@ -21,17 +21,23 @@ class App extends Component{
     this.state={
       VideoLink:'',
     }
+    this.settingVideo=this.settingVideo.bind(this);
+    this.getVideo=this.getVideo.bind(this);
   }
   componentDidMount(){
     this.getVideo()
   }
-  getVideo(weatherStatus){
-    if(weatherStatus){
-      console.log(`was true`)
+  settingVideo(video){
+    this.setState({
+        VideoLink:video
+    })
+  }
+  getVideo(link){
+      console.log(link)
+    if(this.state.VideoLink===''){
+        link='https://api.pexels.com/videos/videos/1860175'//acticvate defalt
     }
-    switch(weatherStatus){
-      case weatherStatus==='Clear':
-        fetch('https://api.pexels.com/videos/videos/2605326',{
+    fetch(link,{
         method:'GET',
         headers:{
             'Authorization':'563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da'
@@ -39,82 +45,27 @@ class App extends Component{
         }
         ).then((response)=>{
             if(response.ok){
+                console.log('Network response was ok.');
                 return response.json()
             }else {
                 console.log('Network response was not ok.');
             }
         }).then((data)=>{
+            console.log(data.video_files)
             data.video_files.forEach(video => {
-                if(video.id===133972){
-                    this.setState({
-                        VideoLink:video.link
-                    })
-                }
-            });
-        })
-        break;
-      case weatherStatus==='Clouds':
-        console.log(`was activaded: ${weatherStatus}`)
-        fetch('https://api.pexels.com/videos/videos/12762131',{
-        method:'GET',
-        headers:{
-            'Authorization':'563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da'
-            }
-        }
-        ).then((response)=>{
-            if(response.ok){
-                return response.json()
-            }else {
-                console.log('Network response was not ok.');
-            }
-        }).then((data)=>{
-            data.video_files.forEach(video => {
-                if(video.id===5603619){
-                    this.setState({
-                        VideoLink:video.link
-                    })
-                }
-            });
-        })
-        break;
-      default:
-        fetch('https://api.pexels.com/videos/videos/1860175',{
-        method:'GET',
-        headers:{
-            'Authorization':'563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da'
-            }
-        }
-        ).then((response)=>{
-            if(response.ok){
-                return response.json()
-            }else {
-                console.log('Network response was not ok.');
-            }
-        }).then((data)=>{
-            data.video_files.forEach(video => {
-                if(video.id===77347){
-                    this.setState({
-                        VideoLink:video.link
-                    })
+                if(video.id===77347){//default
+                    this.settingVideo(video.link)
+                }else if(video.id===5603622){//cloud
+                    this.settingVideo(video.link)
+                }else if(video.id===133972){//clear
+                    this.settingVideo(video.link)
                 }
             });
         }).catch(
             (erro)=>{
                 console.log(erro)   
-            }
-        )
-      }
-  }
-  // updateVideo(weatherStatus){
-  //   if(weatherStatus){
-
-  //   }
-  //   // this.setState(
-  //   //   {
-  //   //     VideoLink:newLink,
-  //   //   }
-  //   // )
-  // }
+        })
+    }
   render(){
     return (
       <div className="App">

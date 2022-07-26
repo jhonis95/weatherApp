@@ -21,11 +21,15 @@ class home extends Component{
                 weather:null,
             }
         }
+        this.weather=this.state.weatherAPIData.weather;
         this.timeoutID=timeoutID;
         this.weatherAPIKey='235ee31517e38d928f1e4d68b6d638fd'
 
         this.searchHeandler=this.searchHeandler.bind(this);
         this.fetchLocation=this.fetchLocation.bind(this);
+
+        this.updateBackground=this.updateBackground.bind(this);
+        this.settingBackground=this.settingBackground.bind(this);
     }
     searchHeandler(event){
         this.setState({
@@ -57,7 +61,6 @@ class home extends Component{
             ).then((response)=>{
                 return response.json();
             }).then((data)=>{
-                console.log(data)
                 this.setState({
                     weatherAPIData:{
                         city:data.name,
@@ -68,16 +71,37 @@ class home extends Component{
                         weather:data.weather[0].main,
                     }
                 })
-            })
-        this.props.updateVideo(this.state.weather)
-        
+                console.log(data.weather[0].main)
+                this.settingBackground(data.weather[0].main)
+            }
+        )
+    }
+    settingBackground(weather){
+        console.log(`weather is: ${weather}`)
+        let fetchLink;
+        switch(weather){
+            case 'Clear':
+                fetchLink='https://api.pexels.com/videos/videos/2605326'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Clouds':
+                fetchLink='https://api.pexels.com/videos/videos/12762131'
+                this.updateBackground(fetchLink)
+                break;
+            default:
+                fetchLink='https://api.pexels.com/videos/videos/1860175';
+                this.updateBackground(fetchLink)
+        }
+    }
+    updateBackground(link){
+        this.props.updateVideo(link)
     }
     render(){
         return(
             <section className="home">
                 <SearchBar type="text" name="seatch" onChange={this.searchHeandler}></SearchBar>
                 <button>search</button>
-                <WeatherCard weatherPositionData={this.state.weatherAPIData} />
+                <WeatherCard weatherPositionData={this.state.weatherAPIData}  />
             </section>
         )
     }
