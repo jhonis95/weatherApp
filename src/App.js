@@ -21,14 +21,20 @@ class App extends Component{
     this.state={
       VideoLink:'',
     }
+    this.setVideo=this.setVideo.bind(this);
   }
   componentDidMount(){
     this.getVideo()
   }
+  setVideo(video){
+    this.setState({
+        VideoLink:video.link
+    })
+  }
   getVideo(weatherStatus){
     console.log(`was true ${weatherStatus}`)
     switch(weatherStatus){
-      case weatherStatus==='Clear':
+      case `Clear`:
         fetch('https://api.pexels.com/videos/videos/2605326',{
         method:'GET',
         headers:{
@@ -44,14 +50,16 @@ class App extends Component{
         }).then((data)=>{
             data.video_files.forEach(video => {
                 if(video.id===133972){
-                    this.setState({
-                        VideoLink:video.link
-                    })
+                    this.setVideo(video.link)//using a new func to set state
                 }
             });
-        })
+        }).catch(
+            (erro)=>{
+                console.log(`error in clear: ${erro}`)   
+            }
+        )
         break;
-      case weatherStatus==='Clouds':
+      case `Clouds`:
         console.log(`was activaded: ${weatherStatus}`)
         fetch('https://api.pexels.com/videos/videos/12762131',{
         method:'GET',
@@ -68,14 +76,17 @@ class App extends Component{
         }).then((data)=>{
             data.video_files.forEach(video => {
                 if(video.id===5603619){
-                    this.setState({
-                        VideoLink:video.link
-                    })
+                    this.setVideo(video.link)
                 }
             });
-        })
+        }).catch(
+            (erro)=>{
+                console.log(`error in Clouds: ${erro}`)    
+            }
+        )
         break;
       default:
+        console.log('default background')
         fetch('https://api.pexels.com/videos/videos/1860175',{
         method:'GET',
         headers:{
@@ -91,9 +102,7 @@ class App extends Component{
         }).then((data)=>{
             data.video_files.forEach(video => {
                 if(video.id===77347){
-                    this.setState({
-                        VideoLink:video.link
-                    })
+                    this.setVideo(video.link)
                 }
             });
         }).catch(
@@ -103,16 +112,6 @@ class App extends Component{
         )
       }
   }
-  // updateVideo(weatherStatus){
-  //   if(weatherStatus){
-
-  //   }
-  //   // this.setState(
-  //   //   {
-  //   //     VideoLink:newLink,
-  //   //   }
-  //   // )
-  // }
   render(){
     return (
       <div className="App">

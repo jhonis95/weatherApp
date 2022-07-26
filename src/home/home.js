@@ -28,7 +28,6 @@ class home extends Component{
 
         this.searchHeandler=this.searchHeandler.bind(this);
         this.fetchLocation=this.fetchLocation.bind(this);
-        this.sendWeatherStatus=this.sendWeatherStatus.bind(this);
     }
     searchHeandler(event){
         this.setState({
@@ -75,14 +74,10 @@ class home extends Component{
             }
         )
     }
-    sendWeatherStatus(){ //erro in catch the data before after the status change
-        if(!this.state.weatherAPIData.weather){
-            console.log(`woked: ${this.state.weatherAPIData.weather}`)
+    render(){
+        if(this.state.weatherAPIData.weather!==null){
             this.props.updateVideo(this.state.weatherAPIData.weather)
         }
-    }
-    render(){
-        console.log(this.state.weatherAPIData.weather);
         return(
             <section className="home">
                 <SearchBar type="text" name="seatch" onChange={this.searchHeandler}></SearchBar>
