@@ -32,18 +32,19 @@ class home extends Component{
         this.settingBackground=this.settingBackground.bind(this);
         
     }
-    changeHeandler(event){
+    changeHeandler(event){//setting the cityname state
         this.setState({
             cityName:event.target.value
         })
-    }
-    searchHeandler(){
+        //in the future can make a new mathod to make a downdrop menu
         // if(this.timeoutID){//prevent to use the last setTimeout
         //     clearTimeout(this.timeoutID)
         // }
         // this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
         //     this.fetchLocation()
         // },1000)
+    }
+    searchHeandler(){
         this.fetchLocation()
     }
     fetchLocation(){
@@ -101,9 +102,18 @@ class home extends Component{
     render(){
         return(
             <section className="home">
-                <SearchBar type="text" name="seatch" onChange={this.changeHeandler}></SearchBar>
-                <button onClick={this.searchHeandler}>search</button>
-                <WeatherCard weatherPositionData={this.state.weatherAPIData}  />
+                <SearchBar 
+                    type="text" 
+                    name="seatch" 
+                    onChange={this.changeHeandler}
+                />
+                <button 
+                    onClick={this.searchHeandler}>
+                    search
+                </button>
+                <WeatherCard 
+                    weatherPositionData={this.state.weatherAPIData}
+                />
             </section>
         )
     }
