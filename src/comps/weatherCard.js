@@ -27,12 +27,12 @@ class weatherCard extends Component{
     render(){
         return(
             <Card>        
-                <CityName>{this.props.weatherPositionData.city}</CityName>
-                <Temperature>Temperature: {this.props.weatherPositionData.temperature}</Temperature>
-                <Temperature>Max Temperature: {this.props.weatherPositionData.tempMax}</Temperature>
-                <Temperature>Min Temperature: {this.props.weatherPositionData.tempMin}</Temperature>
-                <Weather>{this.props.weatherPositionData.weather}</Weather>
-                <Weather>{this.props.weatherPositionData.humidity}</Weather>
+                <CityName>{this.props.weatherData.city}, {this.props.country}</CityName>
+                <Temperature>Temperature: {this.props.weatherData.temperature}</Temperature>
+                <Temperature>Max Temperature: {this.props.weatherData.tempMax}</Temperature>
+                <Temperature>Min Temperature: {this.props.weatherData.tempMin}</Temperature>
+                <Weather>{this.props.weatherData.weather}</Weather>
+                <Weather>{this.props.weatherData.humidity}</Weather>
             </Card>
         )
     }

@@ -11,6 +11,10 @@ class home extends Component{
         super(pros);
         this.state={
             cityName:'',
+            country:'',
+            data:null,
+            time:null,
+            weatherIcon:null,
             weatherAPIData:{
                 city:null,
                 temperature:null,
@@ -32,18 +36,19 @@ class home extends Component{
         this.settingBackground=this.settingBackground.bind(this);
         
     }
-    changeHeandler(event){
+    changeHeandler(event){//setting the cityname state
         this.setState({
             cityName:event.target.value
         })
-    }
-    searchHeandler(){
+        //in the future can make a new mathod to make a downdrop menu
         // if(this.timeoutID){//prevent to use the last setTimeout
         //     clearTimeout(this.timeoutID)
         // }
         // this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
         //     this.fetchLocation()
         // },1000)
+    }
+    searchHeandler(){
         this.fetchLocation()
     }
     fetchLocation(){
@@ -56,6 +61,9 @@ class home extends Component{
                     console.log('Network response was not ok.');
                 }
             }).then((data)=>{
+                this.setState({
+                    country:data[0].country
+                })
                 this.fetchWeather(data[0].lat,data[0].lon)
             })
     }
@@ -90,6 +98,26 @@ class home extends Component{
                 fetchLink='https://api.pexels.com/videos/videos/12762131'
                 this.updateBackground(fetchLink)
                 break;
+            case 'Rain':
+                fetchLink='https://api.pexels.com/videos/videos/2491284'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Thunderstorm':
+                fetchLink='https://api.pexels.com/videos/videos/10651140'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Drizzle':
+                fetchLink='https://api.pexels.com/videos/videos/6042260'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Snow':
+                fetchLink='https://api.pexels.com/videos/videos/857032'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Fog':
+                fetchLink='https://api.pexels.com/videos/videos/2888383'
+                this.updateBackground(fetchLink)
+                break;
             default:
                 fetchLink='https://api.pexels.com/videos/videos/1860175';
                 this.updateBackground(fetchLink)
@@ -101,9 +129,19 @@ class home extends Component{
     render(){
         return(
             <section className="home">
-                <SearchBar type="text" name="seatch" onChange={this.changeHeandler}></SearchBar>
-                <button onClick={this.searchHeandler}>search</button>
-                <WeatherCard weatherPositionData={this.state.weatherAPIData}  />
+                <SearchBar 
+                    type="text" 
+                    name="seatch" 
+                    onChange={this.changeHeandler}
+                />
+                <button 
+                    onClick={this.searchHeandler}>
+                    search
+                </button>
+                <WeatherCard 
+                    weatherData={this.state.weatherAPIData}
+                    country={this.state.country}
+                />
             </section>
         )
     }
