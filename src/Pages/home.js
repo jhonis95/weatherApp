@@ -91,6 +91,26 @@ class home extends Component{
                 fetchLink='https://api.pexels.com/videos/videos/12762131'
                 this.updateBackground(fetchLink)
                 break;
+            case 'Rain':
+                fetchLink='https://api.pexels.com/videos/videos/2491284'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Thunderstorm':
+                fetchLink='https://api.pexels.com/videos/videos/10651140'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Drizzle':
+                fetchLink='https://api.pexels.com/videos/videos/6042260'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Snow':
+                fetchLink='https://api.pexels.com/videos/videos/857032'
+                this.updateBackground(fetchLink)
+                break;
+            case 'Fog':
+                fetchLink='https://api.pexels.com/videos/videos/2888383'
+                this.updateBackground(fetchLink)
+                break;
             default:
                 fetchLink='https://api.pexels.com/videos/videos/1860175';
                 this.updateBackground(fetchLink)

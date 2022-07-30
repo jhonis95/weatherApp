@@ -54,9 +54,19 @@ class App extends Component{
                 if(video.id===77347){//default
                     this.settingVideo(video.link)
                 }else if(video.id===5603622){//cloud
-                    this.settingVideo(video.link)
+                  this.settingVideo(video.link)
                 }else if(video.id===133972){//clear
-                    this.settingVideo(video.link)
+                  this.settingVideo(video.link)
+                }else if(video.id===124263){//Rain
+                  this.settingVideo(video.link)
+                }else if(video.id===4714077){//thunderstorm
+                  this.settingVideo(video.link)
+                }else if(video.id===1903611){//drizzle
+                  this.settingVideo(video.link)
+                }else if(video.id===15223){//snow
+                  this.settingVideo(video.link)
+                }else if(video.id===175152){//fog
+                  this.settingVideo(video.link)
                 }
             });
         }).catch(
