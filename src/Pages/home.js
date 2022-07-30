@@ -5,7 +5,6 @@ import styled from "styled-components";
 const SearchBar=styled.input`
     width: 300px;
     background-color: aqua;
-    position: absolute;
 `
 class home extends Component{
     constructor(pros,timeoutID){
@@ -26,21 +25,26 @@ class home extends Component{
         this.weatherAPIKey='235ee31517e38d928f1e4d68b6d638fd'
 
         this.searchHeandler=this.searchHeandler.bind(this);
+        this.changeHeandler=this.changeHeandler.bind(this);
         this.fetchLocation=this.fetchLocation.bind(this);
 
         this.updateBackground=this.updateBackground.bind(this);
         this.settingBackground=this.settingBackground.bind(this);
+        
     }
-    searchHeandler(event){
+    changeHeandler(event){
         this.setState({
             cityName:event.target.value
         })
-        if(this.timeoutID){//prevent to use the last setTimeout
-            clearTimeout(this.timeoutID)
-        }
-        this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
-            this.fetchLocation()
-        },1000)
+    }
+    searchHeandler(){
+        // if(this.timeoutID){//prevent to use the last setTimeout
+        //     clearTimeout(this.timeoutID)
+        // }
+        // this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
+        //     this.fetchLocation()
+        // },1000)
+        this.fetchLocation()
     }
     fetchLocation(){
         fetch(
@@ -71,13 +75,11 @@ class home extends Component{
                         weather:data.weather[0].main,
                     }
                 })
-                console.log(data.weather[0].main)
-                this.settingBackground(data.weather[0].main)
+                this.settingBackground(data.weather[0].main)//triggin the background change
             }
         )
     }
-    settingBackground(weather){
-        console.log(`weather is: ${weather}`)
+    settingBackground(weather){//this method is for set the right link to the parent component
         let fetchLink;
         switch(weather){
             case 'Clear':
@@ -93,14 +95,14 @@ class home extends Component{
                 this.updateBackground(fetchLink)
         }
     }
-    updateBackground(link){
+    updateBackground(link){//method that will send the link to the parent component
         this.props.updateVideo(link)
     }
     render(){
         return(
             <section className="home">
-                <SearchBar type="text" name="seatch" onChange={this.searchHeandler}></SearchBar>
-                <button>search</button>
+                <SearchBar type="text" name="seatch" onChange={this.changeHeandler}></SearchBar>
+                <button onClick={this.searchHeandler}>search</button>
                 <WeatherCard weatherPositionData={this.state.weatherAPIData}  />
             </section>
         )

@@ -2,7 +2,7 @@
 // import { createClient } from 'pexels';
 import { Component } from "react";
 import NavBar from "./comps/navBar";
-import Home from "./home/home";
+import Home from "./Pages/home";
 import styled from "styled-components";
 
 // const clientImgKey = createClient('563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da');
@@ -33,7 +33,6 @@ class App extends Component{
     })
   }
   getVideo(link){
-      console.log(link)
     if(this.state.VideoLink===''){
         link='https://api.pexels.com/videos/videos/1860175'//acticvate defalt
     }
@@ -45,13 +44,11 @@ class App extends Component{
         }
         ).then((response)=>{
             if(response.ok){
-                console.log('Network response was ok.');
                 return response.json()
             }else {
                 console.log('Network response was not ok.');
             }
         }).then((data)=>{
-            console.log(data.video_files)
             data.video_files.forEach(video => {
                 if(video.id===77347){//default
                     this.settingVideo(video.link)
