@@ -11,6 +11,10 @@ class home extends Component{
         super(pros);
         this.state={
             cityName:'',
+            country:'',
+            data:null,
+            time:null,
+            weatherIcon:null,
             weatherAPIData:{
                 city:null,
                 temperature:null,
@@ -57,6 +61,9 @@ class home extends Component{
                     console.log('Network response was not ok.');
                 }
             }).then((data)=>{
+                this.setState({
+                    country:data[0].country
+                })
                 this.fetchWeather(data[0].lat,data[0].lon)
             })
     }
@@ -132,7 +139,8 @@ class home extends Component{
                     search
                 </button>
                 <WeatherCard 
-                    weatherPositionData={this.state.weatherAPIData}
+                    weatherData={this.state.weatherAPIData}
+                    country={this.state.country}
                 />
             </section>
         )
