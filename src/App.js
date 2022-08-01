@@ -4,6 +4,7 @@ import { Component } from "react";
 import NavBar from "./comps/navBar";
 import Home from "./Pages/home";
 import styled from "styled-components";
+import "./App.css";
 
 // const clientImgKey = createClient('563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da');
 
@@ -77,8 +78,8 @@ class App extends Component{
   render(){
     return (
         <ErrorBoundary>
+          <NavBar/>
           <div className="App">
-              <NavBar/>
               <Home updateVideo={this.getVideo}/>
               <BackgroundVideo id='video' autoPlay loop muted src={this.state.VideoLink}/>
           </div>

@@ -6,6 +6,10 @@ const SearchBar=styled.input`
     width: 300px;
     background-color: aqua;
 `
+const SearchBarContainer=styled.div`
+    display: flex;
+    justify-content: center;
+`
 class home extends Component{
     constructor(pros,timeoutID){
         super(pros);
@@ -129,15 +133,17 @@ class home extends Component{
     render(){
         return(
             <section className="home">
-                <SearchBar 
-                    type="text" 
-                    name="seatch" 
-                    onChange={this.changeHeandler}
-                />
-                <button 
-                    onClick={this.searchHeandler}>
-                    search
-                </button>
+                <SearchBarContainer>
+                    <SearchBar 
+                        type="text" 
+                        name="seatch" 
+                        onChange={this.changeHeandler}
+                    />
+                    <button 
+                        onClick={this.searchHeandler}>
+                        search
+                    </button>
+                </SearchBarContainer>
                 <WeatherCard 
                     weatherData={this.state.weatherAPIData}
                     country={this.state.country}
