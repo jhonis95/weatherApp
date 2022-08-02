@@ -9,6 +9,7 @@ const SearchBar=styled.input`
 const SearchBarContainer=styled.div`
     display: flex;
     justify-content: center;
+    margin: 10px;
 `
 class home extends Component{
     constructor(pros,timeoutID){
