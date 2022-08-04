@@ -4,12 +4,20 @@ import styled from "styled-components";
 
 const SearchBar=styled.input`
     width: 300px;
-    background-color: aqua;
+    padding: 5px;
+    border-radius: 5ch;
+    margin-right:10px;
 `
 const SearchBarContainer=styled.div`
     display: flex;
     justify-content: center;
     margin: 10px;
+`
+const SearchButton=styled.button`
+    padding: 5px;
+    border-radius: 5ch;
+    width: 100px;
+    margin-left:10px;
 `
 class home extends Component{
     constructor(pros,timeoutID){
@@ -78,6 +86,7 @@ class home extends Component{
             ).then((response)=>{
                 return response.json();
             }).then((data)=>{
+                console.log(data)
                 this.setState({
                     weatherAPIData:{
                         city:data.name,
@@ -120,6 +129,8 @@ class home extends Component{
                 this.updateBackground(fetchLink)
                 break;
             case 'Fog':
+            case 'Mist':
+            case 'Haze':
                 fetchLink='https://api.pexels.com/videos/videos/2888383'
                 this.updateBackground(fetchLink)
                 break;
@@ -135,15 +146,16 @@ class home extends Component{
         return(
             <section className="home">
                 <SearchBarContainer>
-                    <SearchBar 
+                    <SearchBar
+                        placeholder="location" 
                         type="text" 
                         name="seatch" 
                         onChange={this.changeHeandler}
                     />
-                    <button 
+                    <SearchButton 
                         onClick={this.searchHeandler}>
                         search
-                    </button>
+                    </SearchButton>
                 </SearchBarContainer>
                 <WeatherCard 
                     weatherData={this.state.weatherAPIData}
