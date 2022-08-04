@@ -4,7 +4,20 @@ import styled from "styled-components";
 
 const SearchBar=styled.input`
     width: 300px;
-    background-color: aqua;
+    padding: 5px;
+    border-radius: 5ch;
+    margin-right:10px;
+`
+const SearchBarContainer=styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+`
+const SearchButton=styled.button`
+    padding: 5px;
+    border-radius: 5ch;
+    width: 100px;
+    margin-left:10px;
 `
 class home extends Component{
     constructor(pros,timeoutID){
@@ -12,8 +25,6 @@ class home extends Component{
         this.state={
             cityName:'',
             country:'',
-            data:null,
-            time:null,
             weatherIcon:null,
             weatherAPIData:{
                 city:null,
@@ -22,6 +33,7 @@ class home extends Component{
                 tempMin:null,
                 humidity:null,
                 weather:null,
+                timezone:null,
             }
         }
         this.weather=this.state.weatherAPIData.weather;
@@ -62,7 +74,8 @@ class home extends Component{
                 }
             }).then((data)=>{
                 this.setState({
-                    country:data[0].country
+                    country:data[0].country,
+
                 })
                 this.fetchWeather(data[0].lat,data[0].lon)
             })
@@ -81,7 +94,9 @@ class home extends Component{
                         tempMin:data.main.temp_min,
                         humidity:data.main.humidity,
                         weather:data.weather[0].main,
-                    }
+                        timezone:data.timezone,
+                    },
+                    weatherIcon:data.weather[0].icon,
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
             }
@@ -115,6 +130,8 @@ class home extends Component{
                 this.updateBackground(fetchLink)
                 break;
             case 'Fog':
+            case 'Mist':
+            case 'Haze':
                 fetchLink='https://api.pexels.com/videos/videos/2888383'
                 this.updateBackground(fetchLink)
                 break;
@@ -129,18 +146,22 @@ class home extends Component{
     render(){
         return(
             <section className="home">
-                <SearchBar 
-                    type="text" 
-                    name="seatch" 
-                    onChange={this.changeHeandler}
-                />
-                <button 
-                    onClick={this.searchHeandler}>
-                    search
-                </button>
+                <SearchBarContainer>
+                    <SearchBar
+                        placeholder="location" 
+                        type="text" 
+                        name="seatch" 
+                        onChange={this.changeHeandler}
+                    />
+                    <SearchButton 
+                        onClick={this.searchHeandler}>
+                        search
+                    </SearchButton>
+                </SearchBarContainer>
                 <WeatherCard 
                     weatherData={this.state.weatherAPIData}
                     country={this.state.country}
+                    weatherIcon={this.state.weatherIcon}
                 />
             </section>
         )
