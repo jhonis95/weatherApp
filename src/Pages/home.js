@@ -25,8 +25,6 @@ class home extends Component{
         this.state={
             cityName:'',
             country:'',
-            data:null,
-            time:null,
             weatherIcon:null,
             weatherAPIData:{
                 city:null,
@@ -35,6 +33,7 @@ class home extends Component{
                 tempMin:null,
                 humidity:null,
                 weather:null,
+                timezone:null,
             }
         }
         this.weather=this.state.weatherAPIData.weather;
@@ -75,7 +74,8 @@ class home extends Component{
                 }
             }).then((data)=>{
                 this.setState({
-                    country:data[0].country
+                    country:data[0].country,
+
                 })
                 this.fetchWeather(data[0].lat,data[0].lon)
             })
@@ -86,7 +86,6 @@ class home extends Component{
             ).then((response)=>{
                 return response.json();
             }).then((data)=>{
-                console.log(data)
                 this.setState({
                     weatherAPIData:{
                         city:data.name,
@@ -95,7 +94,9 @@ class home extends Component{
                         tempMin:data.main.temp_min,
                         humidity:data.main.humidity,
                         weather:data.weather[0].main,
-                    }
+                        timezone:data.timezone,
+                    },
+                    weatherIcon:data.weather[0].icon,
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
             }
@@ -160,6 +161,7 @@ class home extends Component{
                 <WeatherCard 
                     weatherData={this.state.weatherAPIData}
                     country={this.state.country}
+                    weatherIcon={this.state.weatherIcon}
                 />
             </section>
         )

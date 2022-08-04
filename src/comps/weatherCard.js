@@ -10,13 +10,18 @@ const Card=styled.div`
 `
 const CityImgBackgorund=styled.img`
     width: 100%;
-    height: 20rem;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    height: 100%;
+    border-radius: 10px;
 `
 const CardInfoContainer=styled.div`
     display: flex;
     justify-content: space-evenly;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 `
 const CityName= styled.h1`
     color:white;
@@ -38,8 +43,7 @@ const CardInfo=styled.div`
 
 `
 const WeatherIcon=styled.img`
-    width: 200px;
-    background-color: aqua;
+    background: none;
 `
 class weatherCard extends Component{
     constructor(props){
@@ -50,13 +54,15 @@ class weatherCard extends Component{
         this.featchCardImg=this.featchCardImg.bind(this);
         this.getDate=this.getDate.bind(this);
     }
-    featchCardImg(){//method to get the city image
-        
+    featchCardImg(icon){//method to get the city image
+        let link='http://openweathermap.org/img/wn/'+icon+'@2x.png';
+        console.log(link)
+        return link;
     }
-    getDate(){
-    //    var d = new Date((new Date().getTime())-25200*1000) -25200 is the time zone
-    //    d.toISOString()
-    // response""2020-12-26T13:50:09.012Z""
+    getDate(timezone){
+       var d = new Date((new Date().getTime())+(timezone)*1000)// convert time zone to nomal time
+       console.log(d.toISOString())
+       return d.toISOString().slice(11,16)
     }
     render(){
         return(
@@ -65,7 +71,7 @@ class weatherCard extends Component{
                 <CityName>{this.props.weatherData.city+','} {this.props.weatherData.city?this.props.country:''}</CityName>
                 <CardInfoContainer>
                     <CardInfo>
-                        <WeatherIcon src="" alt=""/>
+                        <WeatherIcon src={this.featchCardImg(this.props.weatherIcon)} alt=""/>
                         <InfoNumber>{this.props.weatherData.temperature}</InfoNumber>
                         <InfoText>{}</InfoText>
                     </CardInfo>
@@ -82,7 +88,7 @@ class weatherCard extends Component{
                         <InfoText>humidity</InfoText>
                     </CardInfo>
                     <CardInfo>
-                        <InfoNumber></InfoNumber>
+                        <InfoNumber>{this.getDate(this.props.weatherData.timezone)}</InfoNumber>
                         <InfoText>Time</InfoText>
                     </CardInfo>
                 </CardInfoContainer>        
