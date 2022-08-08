@@ -53,6 +53,7 @@ class weatherCard extends Component{
         }
         this.featchCardImg=this.featchCardImg.bind(this);
         this.getDate=this.getDate.bind(this);
+        this.findImgCity=this.findImgCity.bind(this);
     }
     featchCardImg(icon){//method to get the city image
         let link='http://openweathermap.org/img/wn/'+icon+'@2x.png';
@@ -63,6 +64,13 @@ class weatherCard extends Component{
        var d = new Date((new Date().getTime())+(timezone)*1000)// convert time zone to nomal time
        console.log(d.toISOString())
        return d.toISOString().slice(11,16)
+    }
+    findImgCity(){
+        fetch(
+            ''
+        ).then((response)=>{
+            console.log(response.json())
+        })
     }
     render(){
         return(
