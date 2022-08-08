@@ -49,28 +49,47 @@ class weatherCard extends Component{
     constructor(props){
         super(props)
         this.state={
-
+            placeAPI:{
+                input: null,
+                inputtype:'textquery',
+                key:'AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            }
         }
         this.featchCardImg=this.featchCardImg.bind(this);
         this.getDate=this.getDate.bind(this);
         this.findImgCity=this.findImgCity.bind(this);
     }
+    shouldComponentUpdate(){
+        if(this.props.weatherData&&this.state.placeAPI.input!=null){
+            if(this.timeoutID){//prevent to use the last setTimeout
+                clearTimeout(this.timeoutID)
+            }
+            this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
+                console.log('should')
+            },1000)
+            return true
+        }else{
+            console.log('did not should')
+            return false
+        }
+    }
     featchCardImg(icon){//method to get the city image
         let link='http://openweathermap.org/img/wn/'+icon+'@2x.png';
-        console.log(link)
         return link;
     }
     getDate(timezone){
        var d = new Date((new Date().getTime())+(timezone)*1000)// convert time zone to nomal time
-       console.log(d.toISOString())
        return d.toISOString().slice(11,16)
     }
     findImgCity(){
-        fetch(
-            ''
-        ).then((response)=>{
-            console.log(response.json())
-        })
+        const findPlaceReq=fetch('').then((res)=>res.json());
+        const placeDetailsReq=fetch('').then((res)=>res.json());
+        const placePhotoReq=fetch().then((res)=>res.json());
+
+        const allData= Promise.all([findPlaceReq,placeDetailsReq,placePhotoReq]);
+
+        allData.then((res) => console.log(res));
+
     }
     render(){
         return(
