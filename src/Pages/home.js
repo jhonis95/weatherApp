@@ -34,6 +34,11 @@ class home extends Component{
                 humidity:null,
                 weather:null,
                 timezone:null,
+            },
+            placeAPI:{
+                input: null,
+                inputtype:'textquery',
+                key:'AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
             }
         }
         this.weather=this.state.weatherAPIData.weather;
@@ -46,6 +51,8 @@ class home extends Component{
 
         this.updateBackground=this.updateBackground.bind(this);
         this.settingBackground=this.settingBackground.bind(this);
+
+        this.findImgCity=this.findImgCity.bind(this);
         
     }
     changeHeandler(event){//setting the cityname state
@@ -97,10 +104,38 @@ class home extends Component{
                         timezone:data.timezone,
                     },
                     weatherIcon:data.weather[0].icon,
+                    placeAPI:{
+                        input:data.name
+                    }
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
+                this.findImgCity(data.name)
             }
         )
+    }
+    findImgCity(cityName){
+        fetch(
+            'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+        ).then(
+            (res)=>res.json()
+        ).then((data)=>{
+            let place_id=data.candidates[0].place_id;
+            console.log(place_id)
+            return fetch('https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
+        }).then(
+            (res)=>res.json()
+        ).then((data)=>{
+            let photo_reference=data.result.photos.photo_reference;
+            console.log(photo_reference)
+        })
+        //const findPlaceReq=
+        // const placeDetailsReq=fetch('').then((res)=>res.json());
+        // const placePhotoReq=fetch().then((res)=>res.json());
+
+        // const allData= Promise.all([findPlaceReq,placeDetailsReq,placePhotoReq]);
+
+        // allData.then((res) => console.log(res));
+
     }
     settingBackground(weather){//this method is for set the right link to the parent component
         let fetchLink;
