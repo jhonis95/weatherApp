@@ -19,15 +19,16 @@ const SearchButton=styled.button`
     width: 100px;
     margin-left:10px;
 `
+
 class home extends Component{
     constructor(pros,timeoutID){
         super(pros);
         this.state={
-            cityName:'',
-            country:'',
+            cityName:null,
+            country:null,
             weatherIcon:null,
             weatherAPIData:{
-                city:null,
+                city:'',
                 temperature:null,
                 tempMax:null,
                 tempMin:null,
@@ -39,7 +40,8 @@ class home extends Component{
                 input: null,
                 inputtype:'textquery',
                 key:'AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
-            }
+            },
+            cityImg:null,
         }
         this.weather=this.state.weatherAPIData.weather;
         this.timeoutID=timeoutID;
@@ -53,7 +55,6 @@ class home extends Component{
         this.settingBackground=this.settingBackground.bind(this);
 
         this.findImgCity=this.findImgCity.bind(this);
-        
     }
     changeHeandler(event){//setting the cityname state
         this.setState({
@@ -115,18 +116,33 @@ class home extends Component{
     }
     findImgCity(cityName){
         fetch(
-            'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
         ).then(
             (res)=>res.json()
         ).then((data)=>{
             let place_id=data.candidates[0].place_id;
             console.log(place_id)
-            return fetch('https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
+            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
         }).then(
             (res)=>res.json()
         ).then((data)=>{
-            let photo_reference=data.result.photos.photo_reference;
-            console.log(photo_reference)
+            let photo_reference=data.result.photos[0].photo_reference;
+
+            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
+        }).then(
+            (res)=>{
+                return res.blob();
+            }
+        ).then(//make the fetch img use by react
+            (imageBlob)=>{
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                this.setState({
+                    cityImg: imageObjectURL,
+                })
+            }
+        ).catch(
+            (erro)=>{
+                console.log(erro)   
         })
         //const findPlaceReq=
         // const placeDetailsReq=fetch('').then((res)=>res.json());
@@ -197,6 +213,7 @@ class home extends Component{
                     weatherData={this.state.weatherAPIData}
                     country={this.state.country}
                     weatherIcon={this.state.weatherIcon}
+                    cityImg={this.state.cityImg}
                 />
             </section>
         )
