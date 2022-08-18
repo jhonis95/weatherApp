@@ -87,10 +87,14 @@ class weatherCard extends Component{
        return d.toISOString().slice(11,16)
     }
     render(){
+        let city;
+        if(this.props.weatherData.city!==''){
+            city=this.props.weatherData.city+','
+        }else city='';
         return(
             <Card>
-                <CityImgBackgorund src="" alt="" />
-                <CityName>{this.props.weatherData.city+','} {this.props.weatherData.city?this.props.country:''}</CityName>
+                <CityImgBackgorund src={this.props.cityImg} alt="cityImage" />
+                <CityName>{city} {this.props.weatherData.city?this.props.country:''}</CityName>
                 <CardInfoContainer>
                     <CardInfo>
                         <WeatherIcon src={this.featchCardImg(this.props.weatherIcon)} alt=""/>
