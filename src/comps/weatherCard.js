@@ -12,10 +12,12 @@ const CityImgBackgorund=styled.img`
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    object-fit:fill;
 `
 const CardInfoContainer=styled.div`
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 300px repeat(auto-fill,174px);
     background: rgba(255, 255, 255, 0.25);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -40,10 +42,13 @@ const InfoText=styled.h4`
 
 `
 const CardInfo=styled.div`
-
+    display: flex;
+    flex-direction: ${props=>props.toRow?props.toRow:'column'};
+    justify-content: center;
 `
 const WeatherIcon=styled.img`
     background: none;
+    width: 100px;
 `
 class weatherCard extends Component{
     constructor(props){
@@ -54,30 +59,6 @@ class weatherCard extends Component{
         this.featchCardImg=this.featchCardImg.bind(this);
         this.getDate=this.getDate.bind(this);
     }
-    // shouldComponentUpdate=()=>{
-    //     if(this.props.weatherData&&this.state.placeAPI.input!=null){
-    //         if(this.timeoutID){//prevent to use the last setTimeout
-    //             clearTimeout(this.timeoutID)
-    //         }
-    //         this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
-    //             console.log('should')
-    //         },1000)
-    //         return true
-    //     }else{
-    //         console.log('did not should')
-    //         return false
-    //     }
-    // }
-    // findImgCity=()=>{
-    //     const findPlaceReq=fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+this.state.placeAPI.input+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY').then((res)=>res.json());
-    //     const placeDetailsReq=fetch('').then((res)=>res.json());
-    //     const placePhotoReq=fetch().then((res)=>res.json());
-
-    //     const allData= Promise.all([findPlaceReq,placeDetailsReq,placePhotoReq]);
-
-    //     allData.then((res) => console.log(res));
-
-    // }
     featchCardImg(icon){//method to get the city image
         let link='http://openweathermap.org/img/wn/'+icon+'@2x.png';
         return link;
@@ -87,19 +68,17 @@ class weatherCard extends Component{
        return d.toISOString().slice(11,16)
     }
     render(){
-        let city;
-        if(this.props.weatherData.city!==''){
-            city=this.props.weatherData.city+','
-        }else city='';
         return(
             <Card>
                 <CityImgBackgorund src={this.props.cityImg} alt="cityImage" />
-                <CityName>{city} {this.props.weatherData.city?this.props.country:''}</CityName>
+                <CityName>{this.props.weatherData.city+','} {this.props.weatherData.city?this.props.country:''}</CityName>
                 <CardInfoContainer>
-                    <CardInfo>
+                    <CardInfo toRow={'row'}>
+                        <div>
+                            <InfoNumber>{this.props.weatherData.temperature+'°C'}</InfoNumber>
+                            <InfoText>{'Temperature'}</InfoText>
+                        </div>
                         <WeatherIcon src={this.featchCardImg(this.props.weatherIcon)} alt=""/>
-                        <InfoNumber>{this.props.weatherData.temperature}</InfoNumber>
-                        <InfoText>{}</InfoText>
                     </CardInfo>
                     <CardInfo>
                         <InfoNumber>{this.props.weatherData.tempMax}</InfoNumber>

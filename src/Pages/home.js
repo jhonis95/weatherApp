@@ -24,7 +24,7 @@ class home extends Component{
     constructor(pros,timeoutID){
         super(pros);
         this.state={
-            cityName:null,
+            cityName:'london',
             country:null,
             weatherIcon:null,
             weatherAPIData:{
@@ -60,13 +60,9 @@ class home extends Component{
         this.setState({
             cityName:event.target.value
         })
-        //in the future can make a new mathod to make a downdrop menu
-        // if(this.timeoutID){//prevent to use the last setTimeout
-        //     clearTimeout(this.timeoutID)
-        // }
-        // this.timeoutID=setTimeout(()=>{//calling the API just after 1s of not new input
-        //     this.fetchLocation()
-        // },1000)
+    }
+    componentDidMount(){
+        this.fetchLocation()
     }
     searchHeandler(){
         this.fetchLocation()
@@ -116,18 +112,23 @@ class home extends Component{
     }
     findImgCity(cityName){
         fetch(
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
         ).then(
             (res)=>res.json()
         ).then((data)=>{
             let place_id=data.candidates[0].place_id;
-            console.log(place_id)
             return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
         }).then(
             (res)=>res.json()
         ).then((data)=>{
-            let photo_reference=data.result.photos[0].photo_reference;
-
+            let photo_reference;
+            for(let i=0;i<=data.result.photos.length;i++){
+                if(data.result.photos[i].width<=1920){
+                    photo_reference=data.result.photos[i].photo_reference;
+                    break;
+                    // return photo_reference=photo.photo_reference
+                }
+            }
             return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
         }).then(
             (res)=>{
