@@ -26,6 +26,7 @@ class home extends Component{
         this.state={
             cityName:'london',
             country:null,
+            state:null,
             weatherIcon:null,
             weatherAPIData:{
                 city:'',
@@ -77,9 +78,10 @@ class home extends Component{
                     console.log('Network response was not ok.');
                 }
             }).then((data)=>{
+                console.log(data)
                 this.setState({
                     country:data[0].country,
-
+                    state:data[0].state,
                 })
                 this.fetchWeather(data[0].lat,data[0].lon)
             })
@@ -112,7 +114,7 @@ class home extends Component{
     }
     findImgCity(cityName){
         fetch(
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
         ).then(
             (res)=>res.json()
         ).then((data)=>{
