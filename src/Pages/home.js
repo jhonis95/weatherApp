@@ -70,7 +70,11 @@ class home extends Component{
     }
     fetchLocation(){
         fetch(
-            'http://api.openweathermap.org/geo/1.0/direct?q='+this.state.cityName+'&limit=1&appid='+this.weatherAPIKey
+            'https://api.openweathermap.org/geo/1.0/direct?q='+this.state.cityName+'&limit=1&appid='+this.weatherAPIKey,
+            {
+                method: "GET", 
+                mode: 'cors',
+            }
             ).then((response)=>{
                 if(response.ok){
                     return response.json()
@@ -88,7 +92,11 @@ class home extends Component{
     }
     fetchWeather(lat,lon){
         fetch(
-            'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+this.weatherAPIKey+'&units=metric'
+            'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+this.weatherAPIKey+'&units=metric',
+            {
+                method: "GET", 
+                mode: 'cors',
+            }
             ).then((response)=>{
                 return response.json();
             }).then((data)=>{
@@ -108,18 +116,35 @@ class home extends Component{
                     }
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
-                this.findImgCity(data.name)
+                // this.findImgCity(data.name) //start using the google api
             }
         )
     }
     findImgCity(cityName){
         fetch(
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            // 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            {
+                method: "GET", 
+                mode: 'cors',
+                headers: {
+                    'Access-Control-Allow-Origin':'*'
+                }   
+            }
         ).then(
             (res)=>res.json()
         ).then((data)=>{
+            //'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
             let place_id=data.candidates[0].place_id;
-            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
+            return fetch('https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+                {
+                    method: "GET", 
+                    mode: 'cors',
+                    headers: {
+                        'Access-Control-Allow-Origin':'*'
+                    }   
+                }
+            )
         }).then(
             (res)=>res.json()
         ).then((data)=>{
@@ -131,7 +156,16 @@ class home extends Component{
                     // return photo_reference=photo.photo_reference
                 }
             }
-            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY')
+            //https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
+            return fetch('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+                {
+                    method: "GET", 
+                    mode: 'cors',
+                    headers: {
+                        'Access-Control-Allow-Origin':'*'
+                    }
+                }
+            )
         }).then(
             (res)=>{
                 return res.blob();
