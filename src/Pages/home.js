@@ -116,14 +116,14 @@ class home extends Component{
                     }
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
-                // this.findImgCity(data.name) //start using the google api
+                this.findImgCity(data.name) //start using the google api
             }
         )
     }
     findImgCity(cityName){
         fetch(
             // 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
-            'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
             {
                 method: "GET", 
                 mode: 'cors',
@@ -136,7 +136,7 @@ class home extends Component{
         ).then((data)=>{
             //'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
             let place_id=data.candidates[0].place_id;
-            return fetch('https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
                 {
                     method: "GET", 
                     mode: 'cors',
@@ -157,7 +157,7 @@ class home extends Component{
                 }
             }
             //https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
-            return fetch('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
                 {
                     method: "GET", 
                     mode: 'cors',
