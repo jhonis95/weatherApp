@@ -1,6 +1,7 @@
 import { Component, React } from "react";
 import WeatherCard from "../comps/weatherCard";
 import styled from "styled-components";
+import keys from "../key.json"
 
 const SearchBar=styled.input`
     width: 300px;
@@ -37,16 +38,16 @@ class home extends Component{
                 weather:null,
                 timezone:null,
             },
-            placeAPI:{
-                input: null,
-                inputtype:'textquery',
-                key:'AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
-            },
+            // placeAPI:{
+            //     input: null,
+            //     inputtype:'textquery',
+            //     key:'AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
+            // },
             cityImg:null,
         }
         this.weather=this.state.weatherAPIData.weather;
         this.timeoutID=timeoutID;
-        this.weatherAPIKey='235ee31517e38d928f1e4d68b6d638fd'
+        this.weatherAPIKey=keys.weatherKey.keyAPI;
 
         this.searchHeandler=this.searchHeandler.bind(this);
         this.changeHeandler=this.changeHeandler.bind(this);
@@ -55,7 +56,7 @@ class home extends Component{
         this.updateBackground=this.updateBackground.bind(this);
         this.settingBackground=this.settingBackground.bind(this);
 
-        this.findImgCity=this.findImgCity.bind(this);
+        // this.findImgCity=this.findImgCity.bind(this); for image city
     }
     changeHeandler(event){//setting the cityname state
         this.setState({
@@ -116,79 +117,15 @@ class home extends Component{
                     }
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
-                this.findImgCity(data.name) //start using the google api
+                //this.findImgCity(data.name) //start using the google api
             }
         )
     }
-    findImgCity(cityName){
-        fetch(
-            // 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='+cityName+'%20'+this.state.state+'%20'+this.state.country+'&inputtype=textquery&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
-            {
-                method: "GET", 
-                mode: 'cors',
-                headers: {
-                    'Access-Control-Allow-Origin':'*'
-                }   
-            }
-        ).then(
-            (res)=>res.json()
-        ).then((data)=>{
-            //'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
-            let place_id=data.candidates[0].place_id;
-            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id='+place_id+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
-                {
-                    method: "GET", 
-                    mode: 'cors',
-                    headers: {
-                        'Access-Control-Allow-Origin':'*'
-                    }   
-                }
-            )
-        }).then(
-            (res)=>res.json()
-        ).then((data)=>{
-            let photo_reference;
-            for(let i=0;i<=data.result.photos.length;i++){
-                if(data.result.photos[i].width<=1920){
-                    photo_reference=data.result.photos[i].photo_reference;
-                    break;
-                    // return photo_reference=photo.photo_reference
-                }
-            }
-            //https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY'
-            return fetch('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference='+photo_reference+'&key=AIzaSyCCy9h4fZxRJ12j9qLL6LnKk7250eNksHY',
-                {
-                    method: "GET", 
-                    mode: 'cors',
-                    headers: {
-                        'Access-Control-Allow-Origin':'*'
-                    }
-                }
-            )
-        }).then(
-            (res)=>{
-                return res.blob();
-            }
-        ).then(//make the fetch img use by react
-            (imageBlob)=>{
-                const imageObjectURL = URL.createObjectURL(imageBlob);
-                this.setState({
-                    cityImg: imageObjectURL,
-                })
-            }
-        ).catch(
-            (erro)=>{
-                console.log(erro)   
+    feachImgCity(){
+        fetch('',{
+            method: "GET", 
+            mode: 'cors',
         })
-        //const findPlaceReq=
-        // const placeDetailsReq=fetch('').then((res)=>res.json());
-        // const placePhotoReq=fetch().then((res)=>res.json());
-
-        // const allData= Promise.all([findPlaceReq,placeDetailsReq,placePhotoReq]);
-
-        // allData.then((res) => console.log(res));
-
     }
     settingBackground(weather){//this method is for set the right link to the parent component
         let fetchLink;

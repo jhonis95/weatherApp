@@ -5,6 +5,7 @@ import NavBar from "./comps/navBar";
 import Home from "./Pages/home";
 import styled from "styled-components";
 import "./App.css";
+import keys from "./key.json"
 
 // const clientImgKey = createClient('563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da');
 
@@ -14,8 +15,6 @@ const BackgroundVideo=styled.video`
     z-index: -1;
     top: 0;
 `
-
-// let weatherApiKey='235ee31517e38d928f1e4d68b6d638fd';
 class App extends Component{
   constructor(){
     super();
@@ -41,7 +40,7 @@ class App extends Component{
     fetch(link,{
         method:'GET',
         headers:{
-            'Authorization':'563492ad6f917000010000019e5ac6db1cca432ea31c2445f79014da'
+            'Authorization': keys.pixelsKey.keyAPI
             }
         }
         ).then((response)=>{
