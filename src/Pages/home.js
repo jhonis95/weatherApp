@@ -56,7 +56,7 @@ class home extends Component{
         this.updateBackground=this.updateBackground.bind(this);
         this.settingBackground=this.settingBackground.bind(this);
 
-        // this.findImgCity=this.findImgCity.bind(this); for image city
+        this.feachImgCity=this.feachImgCity.bind(this); //for image city
     }
     changeHeandler(event){//setting the cityname state
         this.setState({
@@ -112,19 +112,25 @@ class home extends Component{
                         timezone:data.timezone,
                     },
                     weatherIcon:data.weather[0].icon,
-                    placeAPI:{
-                        input:data.name
-                    }
                 })
                 this.settingBackground(data.weather[0].main)//triggin the background change
-                //this.findImgCity(data.name) //start using the google api
+                this.feachImgCity() //fetch the city image
             }
         )
     }
     feachImgCity(){
-        fetch('',{
-            method: "GET", 
-            mode: 'cors',
+        fetch(`https://api.pexels.com/v1/search?query=${this.state.cityName}&orientation=landscape`,{
+            method: "GET",
+            headers:{
+                'Authorization': keys.pixelsKey.keyAPI
+                }
+        }).then((res)=>{
+            return res.json()
+        }).then((data)=>{
+            // console.log(typeof(data.photos[0].src.large))
+            this.setState({
+                cityImg:data.photos[0].src.large,
+            })
         })
     }
     settingBackground(weather){//this method is for set the right link to the parent component
