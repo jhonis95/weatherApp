@@ -15,7 +15,6 @@ const CityImgBackgorund=styled.img`
     object-fit:fill;
 `
 const CardInfoContainer=styled.div`
-    margin-top:50px;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 300px repeat(auto-fill,174px);
