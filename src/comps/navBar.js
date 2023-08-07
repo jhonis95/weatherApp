@@ -7,6 +7,7 @@ const NavBarContainer=styled.nav`
     align-items: center;
     justify-content: space-between;
     background-color: gray;
+    width: 100%;
 `
 const LogoContainer=styled.div`
     display: flex;

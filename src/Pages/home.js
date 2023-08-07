@@ -176,7 +176,7 @@ class home extends Component{
     }
     render(){
         return(
-            <section className="home">
+            <>
                 <SearchBarContainer>
                     <SearchBar
                         placeholder="location" 
@@ -195,7 +195,7 @@ class home extends Component{
                     weatherIcon={this.state.weatherIcon}
                     cityImg={this.state.cityImg}
                 />
-            </section>
+            </>
         )
     }
 }

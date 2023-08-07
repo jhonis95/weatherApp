@@ -2,23 +2,27 @@ import { Component } from "react";
 import styled from "styled-components";
 
 const Card=styled.div`
-    width: 65rem;
-    height: 30rem;
-    background-color: aliceblue;
+    max-width: 80vw;
+    min-width: fit-content;
+    max-height: 80vh;
+    width: 100%;
     position: relative;
-    border-radius: 10px;
 `
 const CityImgBackgorund=styled.img`
     width: 100%;
-    height: 100%;
+    max-height: 60vh;
+    min-height: 30vh;
     border-radius: 10px;
     object-fit:fill;
 `
 const CardInfoContainer=styled.div`
-    display: grid;
+    /* display: grid;
     grid-gap: 10px;
-    grid-template-columns: 300px repeat(auto-fill,174px);
+    grid-template-columns: 200px repeat(auto-fill,174px);*/
     background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -45,6 +49,7 @@ const CardInfo=styled.div`
     display: flex;
     flex-direction: ${props=>props.toRow?props.toRow:'column'};
     justify-content: center;
+    align-items: center;
 `
 const WeatherIcon=styled.img`
     background: none;
