@@ -7,6 +7,7 @@ const NavBarContainer=styled.nav`
     align-items: center;
     justify-content: space-between;
     background-color: gray;
+    width: 100%;
 `
 const LogoContainer=styled.div`
     display: flex;
@@ -17,6 +18,12 @@ const LogoImage=styled.img`
     margin: 5px;
 `
 const Title=styled.h3`
+    @media (max-width: 768px) {
+        display:none;
+    }
+`
+const AppTitle=styled.h2`
+    font-size:large
 `
 const ButtonList=styled.ul`
     margin: 5px;
@@ -24,15 +31,15 @@ const ButtonList=styled.ul`
     padding: 0;
     width: 225px;
     `
-const Button=styled(Title)`
-    margin: 0 10%;
+const Button=styled.button`
+    /* margin: 0 10%; */
+    font-size: large;
     &:hover{
         outline: 2px solid black;
         background-color: white;
         border-radius: 10px;
     }
 `
-
 class navBar extends Component{
     render(){
         return(
@@ -42,7 +49,7 @@ class navBar extends Component{
                     <Title>jonatan de oliveira</Title>
                 </LogoContainer>
 
-                <Title>Weather App</Title>
+                <AppTitle>Weather App</AppTitle>
 
                 <ButtonList>
                     <Button >My Portfolio</Button>
