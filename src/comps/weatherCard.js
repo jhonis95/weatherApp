@@ -86,15 +86,15 @@ class weatherCard extends Component{
                         <WeatherIcon src={this.featchCardImg(this.props.weatherIcon)} alt=""/>
                     </CardInfo>
                     <CardInfo>
-                        <InfoNumber>{this.props.weatherData.tempMax}</InfoNumber>
+                        <InfoNumber>{this.props.weatherData.tempMax+'ºC'}</InfoNumber>
                         <InfoText>Max Temperature</InfoText>
                     </CardInfo>
                     <CardInfo>
-                        <InfoNumber>{this.props.weatherData.tempMin}</InfoNumber>
+                        <InfoNumber>{this.props.weatherData.tempMin+'ºC'}</InfoNumber>
                         <InfoText>Min Temperature</InfoText>
                     </CardInfo>
                     <CardInfo>
-                        <InfoNumber>{this.props.weatherData.humidity}</InfoNumber>
+                        <InfoNumber>{this.props.weatherData.humidity+'%'}</InfoNumber>
                         <InfoText>humidity</InfoText>
                     </CardInfo>
                     <CardInfo>

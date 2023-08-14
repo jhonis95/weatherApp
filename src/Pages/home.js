@@ -13,6 +13,8 @@ const SearchBarContainer=styled.div`
     display: flex;
     justify-content: center;
     margin: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 `
 const SearchButton=styled.button`
     padding: 5px;
